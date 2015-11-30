@@ -13,13 +13,13 @@
 	<!--Font-->
 	<link href='http://fonts.googleapis.com/css?family=Josefin+Sans&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
 	<!--- StyleSheet---->
-	<link rel="stylesheet" href="../unidasweb2/Vista/CSS/intro.css">
+	<link rel="stylesheet" href="unidasweb2/Vista/CSS/intro.css">
 <html>
 <body>
 	<div class="login-block">
 		<div class="logo"><img src="http://viaggatore.com/unidascontigo/wp-content/uploads/2015/01/logo-uc-trans.png" alt="Logo"></div>
 	    <h1>Login</h1>
-	    <form action="../unidasweb2/Controlador/login.php" method="POST" name="form">
+	    <form action="unidasweb2/Controlador/login.php" method="POST" name="form">
 	    	<p id="mensaje" style="color: red;"></p>
 		    <input type="text" maxlength="15" class="user" value="" placeholder="Username" id="user" name="user" onchange="validateChar(this)" required>
 		    <input type="password" maxlength="20" class="pass" value="" placeholder="Password" id="pass" name="pass" onchange="validateChar(this)" required >
@@ -28,7 +28,7 @@
 	</div>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="../unidasweb2/Controlador/JS/operaciones.js"></script>
+<script src="unidasweb2/Controlador/JS/operaciones.js"></script>
 <script type="text/javascript">
 	function validateChar(x){
 		var TCode = x.value;
