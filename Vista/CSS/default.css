@@ -815,6 +815,13 @@ table#t2 tbody tr:hover img{
 
 }
 
+p#format{
+	color: #D9D9D9;
+	text-transform: lowercase;;
+	font-size: 15px;
+	word-spacing: 1px;
+}
+
 /*********************************************************************************/
 /* Table                                                                       */
 /*********************************************************************************/
@@ -839,6 +846,7 @@ table#t2 tbody tr:hover img{
 	height: 25px;
 	float: right;
 	display: block;
+	padding-left: 50px;
 	margin: 0;
 	color: #FFFFFF;
 
@@ -851,6 +859,20 @@ table#t2 tbody tr:hover img{
 	height: 25px;
 	display: none;
 	margin: 0;
+
+}
+
+.deleteButton2{
+	background:url('delete.png')left center no-repeat;
+	background-position: right;
+	border: none;
+	width: 25px;
+	height: 25px;
+	float: right;
+	display: block;
+	margin: 0;
+	padding-right: 50px;
+	color: #FFFFFF;
 
 }
 .addButton{

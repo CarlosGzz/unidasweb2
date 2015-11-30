@@ -1,4 +1,5 @@
 <?php
+	//Eventos
 	session_start();
 	$GLOBALS["off"]=intval(0);
 
@@ -49,7 +50,7 @@
 
 		function fill($off){
 			require "../Modelo/connect.php";
-			$data = $db->query("SELECT * FROM eventos ORDER BY FechaInicio  LIMIT 10 OFFSET $off ");
+			$data = $db->query("SELECT * FROM Eventos ORDER BY FechaInicio  LIMIT 10 OFFSET $off ");
 			$events = array();
 			while($object = mysqli_fetch_object($data)){
 				$events[]=$object;
@@ -61,9 +62,9 @@
 			$table_str.='<th>Nombre del Evento</th>';
 			$table_str.='<th>Descripción</th>';
 			$table_str.='<th>Lugar</th>';
-			$table_str.='<th>Fecha de Inicio</th>';
+			$table_str.='<th>Fecha de Inicio<p id="format">(MM/DD/AAAA)</p></th>';
 			$table_str.='<th>Hora</th>';
-			$table_str.='<th>Fecha de Final</th>';
+			$table_str.='<th>Fecha de Final<p id="format">(MM/DD/AAAA)</p></th>';
 			$table_str.='<th id="thButtons">Crear Evento</th>';
 			$table_str.='<th id="thButtons"><a href="CrearEvento.php"><button class="addButton")></button></a></td>';
 			$table_str.='</tr>';
@@ -109,6 +110,8 @@
 	<link href='http://fonts.googleapis.com/css?family=Josefin+Sans&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
 	<!--- StyleSheet---->
 	<link rel="stylesheet" href="CSS/default.css">
+	<!--- ShortCut ICON---->
+	<link rel="shortcut icon" href="http://viaggatore.com/unidascontigo/wp-content/uploads/2015/04/unidas-contigo-fav.png">
 </head>
 <!-- Body -->
 <body>
@@ -251,6 +254,12 @@
 		var TCode = x.value;
 		var id = x.id;
 		var regex = new RegExp("^[a-zA-Z0-9\\-\\s]+$");
+		if(TCode.indexOf("'") > -1){
+	    	document.getElementById
+	    	document.getElementById(id).value= null;
+	        alert('No se permite ingresar caracteres especiales');
+	        return;
+	    }
 		if(TCode.indexOf("@") > -1){
 			TCode = TCode.replaceAll("@","");
 		}
@@ -269,6 +278,31 @@
 	    if(TCode.indexOf(".") > -1){
 	    	TCode = TCode.replaceAll(".","");		    
 	    }
+	   	if(TCode.indexOf("ñ") > -1){
+	    	TCode = TCode.replaceAll("ñ","");
+	    }
+	    if(TCode.indexOf("ü") > -1){
+	    	TCode = TCode.replaceAll("ü","");
+	    }
+	    if(TCode.indexOf(":") > -1){
+	    	TCode = TCode.replaceAll(":","");
+	    }
+	    if(TCode.indexOf(",") > -1){
+	    	TCode = TCode.replaceAll(",","");
+	    }
+	    if(TCode.indexOf("#") > -1){
+	    	TCode = TCode.replaceAll("#","");
+	    }
+	    if(TCode.indexOf("(") > -1){
+	    	TCode = TCode.replaceAll("(","");
+	    }
+	    if(TCode.indexOf(")") > -1){
+	    	TCode = TCode.replaceAll(")","");
+	    }
+	    var accentRegex=new RegExp("[A-zÀ-ú]");
+		if( accentRegex.test( TCode ) ) {
+			TCode = TCode.replaceAll(accentRegex,"");
+		}
 	   	if(TCode==""){
 	   		return ;		
 		}

@@ -1,4 +1,5 @@
 <?php
+	//Donacion
 	session_start();
 
 	if($_SESSION['validacion'] == 1){
@@ -25,6 +26,18 @@
 					echo "<script>alert(' ". $editQuery . "<br>" . $db->error .")</script>";
 					}
 				};
+				if(isset($_POST['deleteButton'])){
+
+					$deleteQuery = "DELETE 
+									FROM Donacion 
+									WHERE  idDonacion ='$IdDonacion'";
+
+					if ($db->query($deleteQuery) === TRUE) {	
+						echo "<script>alert('Eliminado correctamente')</script>";
+					} else {
+					    echo "<script>alert('Error al borrar: ". $db->error."')</script>";
+					}
+				};
 			}
 		}
 
@@ -40,6 +53,8 @@
 	<link href='http://fonts.googleapis.com/css?family=Josefin+Sans&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
 	<!--- StyleSheet---->
 	<link rel="stylesheet" href="CSS/default.css">
+	<!--- ShortCut ICON---->
+	<link rel="shortcut icon" href="http://viaggatore.com/unidascontigo/wp-content/uploads/2015/04/unidas-contigo-fav.png">
 	<!--- Jquery---->
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <!---Extra Styiling---->
@@ -84,6 +99,9 @@
 						<li class="first"><a href="#">Donación</a></li>          
 					</ul>
 				</div>
+				<a href=AgregarDona.php><button class="but">Crear Modulo Donación</button></a>
+				<br>
+				<br>
 				<?php
 					$data = $db->query("SELECT * FROM Donacion");
 					$secciones = array();
@@ -95,10 +113,12 @@
 					//create table
 					$table_str='<div>';
 					$x = 1;
+					$v= "'Confirmar cambio o modificación'";
 					foreach ($secciones as $seccion) {
-						$table_str.='<form style="float:center;" action="Donacion.php" name="form'.$x.'" method="POST">';
+						$table_str.='<form style="float:center;" action="Donacion.php" name="form'.$x.'" method="POST" onsubmit="return confirm('.$v.')">';
 						$table_str.='<div class="form-style-8">';
-						$table_str.='<button type="submit" name="editButton" class="editButton2" display="block"></button>';
+						$table_str.='<button type="submit" name="editButton" class="editButton2" display="block"></button><span>   </span>';
+						$table_str.='<button type="submit" name="deleteButton" class="deleteButton2" display="block"></button>';
 						$table_str.='<h2><input style="color:white;" type="text" id="tit'.$x.'" name="titulo" value="'.$seccion->Titulo.'" onchange="validateChar(this)" required></h2>';
 						$table_str.='<textarea id="tex'.$x.'" name="texto" placeholder="Texto sobre Donacion" onclick="adjust_textarea(this)" onchange="validateChar(this)" required>'.$seccion->Texto.'</textarea>';
 						$table_str.='<label>Creado por : '.$seccion->Creador.' </label><br>';
@@ -132,10 +152,16 @@
 		var TCode = x.value;
 	    var id = x.id;
 	    var regex = new RegExp("^[a-zA-Z0-9\\-\\s]+$");
-	    if(TCode.indexOf("@") > -1){
-	    	TCode = TCode.replaceAll("@","");
+	    if(TCode.indexOf("'") > -1){
+	    	document.getElementById
+	    	document.getElementById(id).value= null;
+	        alert('No se permite ingresar caracteres especiales');
+	        return;
 	    }
-	    if(TCode.indexOf("?") > -1){
+		if(TCode.indexOf("@") > -1){
+			TCode = TCode.replaceAll("@","");
+		}
+		if(TCode.indexOf("?") > -1){
 	    	TCode = TCode.replaceAll("?","")
 	    }
 	    if(TCode.indexOf("!") > -1){
@@ -148,12 +174,38 @@
 	    	TCode = TCode.replaceAll("¿","");
 	    }
 	    if(TCode.indexOf(".") > -1){
-	    	TCode = TCode.replaceAll(".","");
+	    	TCode = TCode.replaceAll(".","");		    
 	    }
-	    if(TCode==""){
-	    	return ;
+	   	if(TCode.indexOf("ñ") > -1){
+	    	TCode = TCode.replaceAll("ñ","");
 	    }
-	    if( !regex.test( TCode ) ) {
+	    if(TCode.indexOf("ü") > -1){
+	    	TCode = TCode.replaceAll("ü","");
+	    }
+	    if(TCode.indexOf(":") > -1){
+	    	TCode = TCode.replaceAll(":","");
+	    }
+	    if(TCode.indexOf(",") > -1){
+	    	TCode = TCode.replaceAll(",","");
+	    }
+	    if(TCode.indexOf("#") > -1){
+	    	TCode = TCode.replaceAll("#","");
+	    }
+	    if(TCode.indexOf("(") > -1){
+	    	TCode = TCode.replaceAll("(","");
+	    }
+	    if(TCode.indexOf(")") > -1){
+	    	TCode = TCode.replaceAll(")","");
+	    }
+	    var accentRegex=new RegExp("[A-zÀ-ú]");
+		if( accentRegex.test( TCode ) ) {
+			TCode = TCode.replaceAll(accentRegex,"");
+		}
+	   	if(TCode==""){
+	   		return ;		
+		}
+		if( !regex.test( TCode ) ) {
+			document.getElementById
 	    	document.getElementById(id).value= null;
 	        alert('No se permite ingresar caracteres especiales');
 	    }

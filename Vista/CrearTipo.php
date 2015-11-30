@@ -1,4 +1,5 @@
 <?php
+	//Crear Tipo
 	session_start();
 
 	if($_SESSION['validacion'] == 1){
@@ -15,6 +16,8 @@
 	<link href='http://fonts.googleapis.com/css?family=Josefin+Sans&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
 	<!--- StyleSheet---->
 	<link rel="stylesheet" href="CSS/default.css">
+	<!--- ShortCut ICON---->
+	<link rel="shortcut icon" href="http://viaggatore.com/unidascontigo/wp-content/uploads/2015/04/unidas-contigo-fav.png">
 	<!--- Jquery---->
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <!---Extra Styiling---->
@@ -63,8 +66,8 @@
 				<div class="form-style-8">
 					<h2>Crear Tipo</h2>
 					<form action="Modulo.php" name="form" onsubmit=" return validateForm()" method="POST">
-						<input type="url" id="icono" name="Icono" placeholder="Icono" onchange="validateForm2()" required />
-					    <input type="text" id="tipo" name="Tipo" placeholder="Tipo de Cancer" onchange="validateChar(this)" required />
+						<input type="url" id="icono" name="Icono" placeholder="Icono" onchange="validateLink(this)" required />
+					    <input type="text" id="tipo" name="Tipo" placeholder="Tipo de Cáncer" onchange="validateChar(this)" required />
 					    <input type="submit" name="crearTipo" value="Crear Modulo" />
 				  	</form>
 				</div>
@@ -85,23 +88,29 @@
 </body>
 </html>
 <script type="text/javascript">
-	function validateForm(){
-
-		var TCode = document.getElementById('tipo').value;
-	    var regex = new RegExp("^[a-zA-Z0-9\\-\\s]+$");
-	    if( !regex.test( TCode ) ) {
-	    	document.getElementById('tipo').value= null;
-	        alert('No se permite ingresar caracteres especiales');
+	function validateLink(x){
+		var TCode = x.value;
+	    var id = x.id;
+	    if(TCode.indexOf("'") > -1){
+	    	document.getElementById(id).value= null;
+	        alert('No se permite ciertos caracteres especiales');
 	    }
 	}
 	function validateChar(x){
 		var TCode = x.value;
 	    var id = x.id;
 	    var regex = new RegExp("^[a-zA-Z0-9\\-\\s]+$");
-	    if(TCode.indexOf("@") > -1){
-	    	TCode = TCode.replaceAll("@","");
+	    if(TCode.indexOf("'") > -1){
+	    if(TCode.indexOf("'") > -1){
+	    	document.getElementById
+	    	document.getElementById(id).value= null;
+	        alert('No se permite ingresar caracteres especiales');
+	        return;
 	    }
-	    if(TCode.indexOf("?") > -1){
+		if(TCode.indexOf("@") > -1){
+			TCode = TCode.replaceAll("@","");
+		}
+		if(TCode.indexOf("?") > -1){
 	    	TCode = TCode.replaceAll("?","")
 	    }
 	    if(TCode.indexOf("!") > -1){
@@ -114,12 +123,38 @@
 	    	TCode = TCode.replaceAll("¿","");
 	    }
 	    if(TCode.indexOf(".") > -1){
-	    	TCode = TCode.replaceAll(".","");
+	    	TCode = TCode.replaceAll(".","");		    
 	    }
-	    if(TCode==""){
-	    	return ;
+	   	if(TCode.indexOf("ñ") > -1){
+	    	TCode = TCode.replaceAll("ñ","");
 	    }
-	    if( !regex.test( TCode ) ) {
+	    if(TCode.indexOf("ü") > -1){
+	    	TCode = TCode.replaceAll("ü","");
+	    }
+	    if(TCode.indexOf(":") > -1){
+	    	TCode = TCode.replaceAll(":","");
+	    }
+	    if(TCode.indexOf(",") > -1){
+	    	TCode = TCode.replaceAll(",","");
+	    }
+	    if(TCode.indexOf("#") > -1){
+	    	TCode = TCode.replaceAll("#","");
+	    }
+	    if(TCode.indexOf("(") > -1){
+	    	TCode = TCode.replaceAll("(","");
+	    }
+	    if(TCode.indexOf(")") > -1){
+	    	TCode = TCode.replaceAll(")","");
+	    }
+	    var accentRegex=new RegExp("[A-zÀ-ú]");
+		if( accentRegex.test( TCode ) ) {
+			TCode = TCode.replaceAll(accentRegex,"");
+		}
+	   	if(TCode==""){
+	   		return ;		
+		}
+		if( !regex.test( TCode ) ) {
+			document.getElementById
 	    	document.getElementById(id).value= null;
 	        alert('No se permite ingresar caracteres especiales');
 	    }

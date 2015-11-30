@@ -1,4 +1,5 @@
 <?php
+	//Educacion
 	session_start();
 	$GLOBALS["off"]=intval(0);
 
@@ -47,9 +48,9 @@
 			$table_str.='</thead>';
 			$table_str.='<tbody>';
 			$x = 1;
+			$v= "'Confirmar cambio o modificación'";
 			foreach ($tipos as $tipo) {
 				$IdTipo = $tipo->IdTipo;
-				echo $IdTipo;
 				$result=$db->query("SELECT COUNT(*) as numModulos FROM Modulo WHERE IdTipo=$IdTipo ");
 				$numModulos=mysqli_fetch_assoc($result);
 
@@ -59,7 +60,7 @@
 				$table_str.='<td><input form="form'.$x.'" class="input" name="tipo" type="text", value="'.$tipo->Tipo.'" readonly/></td>';
 				$table_str.='<td>'.$numModulos['numModulos'].'</td>';
 				$table_str.='<td id="tdButtons"><button form="form'.$x.'" id="b1" type="submit" name="editButton" class="editButton"></td>';
-				$table_str.='<td id="tdButtons"><button form="form'.$x.'" id="b2" type="submit" name="deleteButton" class="deleteButton"></button></td>';
+				$table_str.='<td id="tdButtons"><button form="form'.$x.'" id="b2" type="submit" name="deleteButton" class="deleteButton" onclick="return confirm('.$v.');"></button></td>';
 				$table_str.='<td><input id="input" name="IdTipo" type="hidden", value="'.$tipo->IdTipo.'" ></td>';
 				$table_str.='</tr>';
 				$table_str.='</form>';
@@ -86,6 +87,8 @@
 	<link href='http://fonts.googleapis.com/css?family=Josefin+Sans&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
 	<!--- StyleSheet---->
 	<link rel="stylesheet" href="CSS/default.css">
+	<!--- ShortCut ICON---->
+	<link rel="shortcut icon" href="http://viaggatore.com/unidascontigo/wp-content/uploads/2015/04/unidas-contigo-fav.png">
 	<!--- Jquery---->
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 </head>

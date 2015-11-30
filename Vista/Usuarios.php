@@ -1,4 +1,5 @@
 <?php
+	//Usuarios
 	session_start();
 	$GLOBALS["off"]=intval(0);
 
@@ -62,9 +63,9 @@
 			$table_str.='</tr>';
 			$table_str.='</thead>';
 			$table_str.='<tbody>';
-
+			$v= "'Confirmar cambio o modificación'";
 			foreach ($users as $user) {
-				$table_str.='<form action="Usuarios.php" method="POST">';
+				$table_str.='<form action="Usuarios.php" method="POST" onsubmit="return confirm('.$v.');">';
 				$table_str.='<tr>';
 				$table_str.='<td><input class="input" name="nombre" type="text", value="'.$user->Nombre.' '.$user->Apellido.'" readonly="readonly"></td>';
 				$table_str.='<td><input class="input" name="username" type="text", value="'.$user->Username.'" readonly="readonly"></td>';
@@ -97,6 +98,8 @@
 	<link href='http://fonts.googleapis.com/css?family=Josefin+Sans&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
 	<!--- StyleSheet---->
 	<link rel="stylesheet" href="CSS/default.css">
+	<!--- ShortCut ICON---->
+	<link rel="shortcut icon" href="http://viaggatore.com/unidascontigo/wp-content/uploads/2015/04/unidas-contigo-fav.png">
 </head>
 <body>
 	<div id="wrapper">
@@ -207,6 +210,12 @@
 		var TCode = x.value;
 		var id = x.id;
 		var regex = new RegExp("^[a-zA-Z0-9\\-\\s]+$");
+		if(TCode.indexOf("'") > -1){
+	    	document.getElementById
+	    	document.getElementById(id).value= null;
+	        alert('No se permite ingresar caracteres especiales');
+	        return;
+	    }
 		if(TCode.indexOf("@") > -1){
 			TCode = TCode.replaceAll("@","");
 		}
@@ -225,6 +234,31 @@
 	    if(TCode.indexOf(".") > -1){
 	    	TCode = TCode.replaceAll(".","");		    
 	    }
+	   	if(TCode.indexOf("ñ") > -1){
+	    	TCode = TCode.replaceAll("ñ","");
+	    }
+	    if(TCode.indexOf("ü") > -1){
+	    	TCode = TCode.replaceAll("ü","");
+	    }
+	    if(TCode.indexOf(":") > -1){
+	    	TCode = TCode.replaceAll(":","");
+	    }
+	    if(TCode.indexOf(",") > -1){
+	    	TCode = TCode.replaceAll(",","");
+	    }
+	    if(TCode.indexOf("#") > -1){
+	    	TCode = TCode.replaceAll("#","");
+	    }
+	    if(TCode.indexOf("(") > -1){
+	    	TCode = TCode.replaceAll("(","");
+	    }
+	    if(TCode.indexOf(")") > -1){
+	    	TCode = TCode.replaceAll(")","");
+	    }
+	    var accentRegex=new RegExp("[A-zÀ-ú]");
+		if( accentRegex.test( TCode ) ) {
+			TCode = TCode.replaceAll(accentRegex,"");
+		}
 	   	if(TCode==""){
 	   		return ;		
 		}

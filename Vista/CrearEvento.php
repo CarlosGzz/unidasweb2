@@ -1,4 +1,5 @@
 <?php
+	//Crear Evento
 	session_start();
 
 	if($_SESSION['validacion'] == 1){
@@ -39,6 +40,8 @@
 	<link href='http://fonts.googleapis.com/css?family=Josefin+Sans&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
 	<!--- StyleSheet---->
 	<link rel="stylesheet" href="CSS/default.css">
+	<!--- ShortCut ICON---->
+	<link rel="shortcut icon" href="http://viaggatore.com/unidascontigo/wp-content/uploads/2015/04/unidas-contigo-fav.png">
 	<!--- Jquery---->
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 </head>
@@ -92,9 +95,9 @@
 					    <input type="text" maxlength="140" id="nombre" name="nombre" placeholder="Nombre Del Evento" onchange="validateChar(this)" required />
 					    <textarea name="descripcion" id="descripcion" maxlenght="400" placeholder="Descripcion" onkeyup="adjust_textarea(this)" onchange="validateChar(this)" required></textarea>
 					    <input type="text" maxlength="140" id="lugar" name="lugar" placeholder="Direccion del Evento" onchange="validateChar(this)" />
-					    Fecha Inicial<input type="date" id="fechaI" name="fechaI" placeholder="Fecha Inicial (YYYY-MM-DD)" onchange="return validateForm2()" required />
+					    Fecha Inicial<p id="format">(MM/DD/AAAA)</p><input type="date" id="fechaI" name="fechaI" placeholder="Fecha Inicial (YYYY-MM-DD)" onchange="return validateForm2()" required />
 					    <input type="time" name="hora" value="12:00" required />
-					    Fecha Final<input type="date" id="fechaF" name="fechaF" placeholder="Fecha Final(YYYY-MM-DD)" onchange="return validateForm2()" required />
+					    Fecha Final<p id="format">(MM/DD/AAAA)</p><input type="date" id="fechaF" name="fechaF" placeholder="Fecha Final(YYYY-MM-DD)" onchange="return validateForm2()" required />
 					    <input type="submit" name="crearEvento" value="Crear Evento" />
 				  	</form>
 				</div>
@@ -149,32 +152,64 @@
 		    var TCode = x.value;
 		    var id = x.id;
 		    var regex = new RegExp("^[a-zA-Z0-9\\-\\s]+$");
-		    if(TCode.indexOf("@") > -1){
-		    	TCode = TCode.replaceAll("@","");
-		    }
-		    if(TCode.indexOf("?") > -1){
-		    	TCode = TCode.replaceAll("?","")
-		    }
-		    if(TCode.indexOf("!") > -1){
-		    	TCode = TCode.replaceAll("!","");
-		    }
-		    if(TCode.indexOf("¡") > -1){
-		    	TCode = TCode.replaceAll("¡","");
-		    }
-		    if(TCode.indexOf("¿") > -1){
-		    	TCode = TCode.replaceAll("¿","");
-		    }
-		    if(TCode.indexOf(".") > -1){
-		    	TCode = TCode.replaceAll(".","");
-		    }
-		    if(TCode==""){
-		    	return ;
-		    }
-		    if( !regex.test( TCode ) ) {
-		    	document.getElementById(id).value= null;
-		        alert('No se permite ingresar caracteres especiales');
-		    }
+		    if(TCode.indexOf("'") > -1){
+	    	document.getElementById
+	    	document.getElementById(id).value= null;
+	        alert('No se permite ingresar caracteres especiales');
+	        return;
+	    }
+		if(TCode.indexOf("@") > -1){
+			TCode = TCode.replaceAll("@","");
 		}
+		if(TCode.indexOf("?") > -1){
+	    	TCode = TCode.replaceAll("?","")
+	    }
+	    if(TCode.indexOf("!") > -1){
+	    	TCode = TCode.replaceAll("!","");
+	    }
+	    if(TCode.indexOf("¡") > -1){
+	    	TCode = TCode.replaceAll("¡","");
+	    }
+	    if(TCode.indexOf("¿") > -1){
+	    	TCode = TCode.replaceAll("¿","");
+	    }
+	    if(TCode.indexOf(".") > -1){
+	    	TCode = TCode.replaceAll(".","");		    
+	    }
+	   	if(TCode.indexOf("ñ") > -1){
+	    	TCode = TCode.replaceAll("ñ","");
+	    }
+	    if(TCode.indexOf("ü") > -1){
+	    	TCode = TCode.replaceAll("ü","");
+	    }
+	    if(TCode.indexOf(":") > -1){
+	    	TCode = TCode.replaceAll(":","");
+	    }
+	    if(TCode.indexOf(",") > -1){
+	    	TCode = TCode.replaceAll(",","");
+	    }
+	    if(TCode.indexOf("#") > -1){
+	    	TCode = TCode.replaceAll("#","");
+	    }
+	    if(TCode.indexOf("(") > -1){
+	    	TCode = TCode.replaceAll("(","");
+	    }
+	    if(TCode.indexOf(")") > -1){
+	    	TCode = TCode.replaceAll(")","");
+	    }
+	    var accentRegex=new RegExp("[A-zÀ-ú]");
+		if( accentRegex.test( TCode ) ) {
+			TCode = TCode.replaceAll(accentRegex,"");
+		}
+	   	if(TCode==""){
+	   		return ;		
+		}
+		if( !regex.test( TCode ) ) {
+			document.getElementById
+	    	document.getElementById(id).value= null;
+	        alert('No se permite ingresar caracteres especiales');
+	    }
+	}
 		String.prototype.replaceAll = function(target, replacement) {
   			return this.split(target).join(replacement);
 		};

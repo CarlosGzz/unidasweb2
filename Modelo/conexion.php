@@ -3,12 +3,13 @@
 	class conexion{
 
 		private $conexion ;
-		private $server = "fdb7.biz.nf";
-		private $username = "1982557_unidasbd";
-		private $password = "unidasbd1";
-		private $dbname = "1982557_unidasbd";
+		private $server = "localhost";
+		private $username = "root";
+		private $password = "kobyjzt";
+		private $dbname = "UnidasBD";
 		private $user;
 		private $pass;
+
 
 
 		public function __construct(){

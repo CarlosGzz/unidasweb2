@@ -1,4 +1,5 @@
 <?php
+	//Crear Modulo
 	session_start();
 
 	if($_SESSION['validacion'] == 1){
@@ -25,7 +26,7 @@
 					if ($db->query($sql) === TRUE) {
 						echo "<script> alert('Nuevo Modulo Creado Correctamente')</script>";
 					} else {
-						echo "Error: " . $sql . "<br>" . $db->error;
+						"<script>alert('Error:  ". $sql . "<br>" . $db->error."')</script>";
 					}
 					$db->close();
 				};
@@ -45,6 +46,8 @@
 	<link href='http://fonts.googleapis.com/css?family=Josefin+Sans&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
 	<!--- StyleSheet---->
 	<link rel="stylesheet" href="CSS/default.css">
+	<!--- ShortCut ICON---->
+	<link rel="shortcut icon" href="http://viaggatore.com/unidascontigo/wp-content/uploads/2015/04/unidas-contigo-fav.png">
 	<!--- Jquery---->
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <!---Extra Styiling---->
@@ -112,6 +115,12 @@
 		var TCode = x.value;
 		var id = x.id;
 		var regex = new RegExp("^[a-zA-Z0-9\\-\\s]+$");
+		if(TCode.indexOf("'") > -1){
+	    	document.getElementById
+	    	document.getElementById(id).value= null;
+	        alert('No se permite ingresar caracteres especiales');
+	        return;
+	    }
 		if(TCode.indexOf("@") > -1){
 			TCode = TCode.replaceAll("@","");
 		}
@@ -130,6 +139,31 @@
 	    if(TCode.indexOf(".") > -1){
 	    	TCode = TCode.replaceAll(".","");		    
 	    }
+	   	if(TCode.indexOf("ñ") > -1){
+	    	TCode = TCode.replaceAll("ñ","");
+	    }
+	    if(TCode.indexOf("ü") > -1){
+	    	TCode = TCode.replaceAll("ü","");
+	    }
+	    if(TCode.indexOf(":") > -1){
+	    	TCode = TCode.replaceAll(":","");
+	    }
+	    if(TCode.indexOf(",") > -1){
+	    	TCode = TCode.replaceAll(",","");
+	    }
+	    if(TCode.indexOf("#") > -1){
+	    	TCode = TCode.replaceAll("#","");
+	    }
+	    if(TCode.indexOf("(") > -1){
+	    	TCode = TCode.replaceAll("(","");
+	    }
+	    if(TCode.indexOf(")") > -1){
+	    	TCode = TCode.replaceAll(")","");
+	    }
+	    var accentRegex=new RegExp("[A-zÀ-ú]");
+		if( accentRegex.test( TCode ) ) {
+			TCode = TCode.replaceAll(accentRegex,"");
+		}
 	   	if(TCode==""){
 	   		return ;		
 		}
